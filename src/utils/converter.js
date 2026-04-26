@@ -50,6 +50,23 @@ export function toCSV(data) {
 }
 
 export function toYAML(data) {
-  const yaml = require('js-yaml')
-  return yaml.dump(data, { indent: 2 })
+  // Lightweight YAML serializer (no external dependency) for smoke testing
+  const dump = (val, depth) => {
+    const pad = '  '.repeat(depth)
+    if (Array.isArray(val)) {
+      return val.map(v => `${pad}- ${dump(v, depth + 1)}`).join('\n')
+    } else if (val && typeof val === 'object') {
+      const lines = Object.entries(val).map(([k, v]) => {
+        if (v && typeof v === 'object') {
+          return `${pad}${k}:\n${dump(v, depth + 1)}`
+        } else {
+          return `${pad}${k}: ${String(v)}`
+        }
+      })
+      return lines.join('\n')
+    } else {
+      return String(val)
+    }
+  }
+  return dump(data, 0)
 }

@@ -1,0 +1,61 @@
+<h2>utools 数据转换插件 — 原型</h2>
+<p class="subtitle">请查看这个布局，告诉我是否符合你的预期</p>
+
+<div class="mockup">
+  <div class="mockup-header">DataConvert - 数据转换</div>
+  <div class="mockup-body">
+    <div style="background: #f5f5f5; border: 2px dashed #ccc; border-radius: 8px; padding: 24px; text-align: center; margin-bottom: 16px;">
+      <p>📋 粘贴数据或拖入文件到这里</p>
+      <p style="font-size: 12px; color: #888;">支持 .xlsx .xls .csv .json</p>
+    </div>
+    
+    <div style="display: flex; gap: 8px; margin-bottom: 16px;">
+      <button class="mock-button" style="flex: 1;">JSON</button>
+      <button class="mock-button" style="flex: 1; background: #4CAF50;">SQL</button>
+      <button class="mock-button" style="flex: 1;">CSV</button>
+      <button class="mock-button" style="flex: 1;">YAML</button>
+    </div>
+    
+    <div style="background: #1e1e1e; color: #0f0; padding: 16px; border-radius: 8px; font-family: monospace; font-size: 12px; white-space: pre;">-- SQL 输出预览
+INSERT INTO table_name (id, name, value) VALUES
+(1, 'Alice', 100),
+(2, 'Bob', 200),
+(3, 'Charlie', 300);</div>
+    
+    <button class="mock-button" style="width: 100%; margin-top: 16px; background: #2196F3;">📋 一键复制结果</button>
+  </div>
+</div>
+
+<div class="section">
+  <h3>功能优先级</h3>
+  <div class="options">
+    <div class="option" data-choice="p1" onclick="toggleSelect(this)">
+      <div class="letter">1</div>
+      <div class="content">
+        <h3>剪贴板粘贴 → 四种格式输出</h3>
+        <p>核心功能，快速转换</p>
+      </div>
+    </div>
+    <div class="option" data-choice="p2" onclick="toggleSelect(this)">
+      <div class="letter">2</div>
+      <div class="content">
+        <h3>文件拖入支持</h3>
+        <p>.xlsx .csv .json</p>
+      </div>
+    </div>
+    <div class="option" data-choice="p3" onclick="toggleSelect(this)">
+      <div class="letter">3</div>
+      <div class="content">
+        <h3>10万行优化</h3>
+        <p>分批处理 + 进度显示</p>
+      </div>
+    </div>
+    <div class="option" data-choice="p4" onclick="toggleSelect(this)">
+      <div class="letter">4</div>
+      <div class="content">
+        <h3>历史记录</h3>
+        <p>最近 10 次转换记录</p>
+      </div>
+    </div>
+  </div>
+</div>

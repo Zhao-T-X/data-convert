@@ -4,7 +4,7 @@
     
     <div class="select-row">
       <span>转换为</span>
-      <select v-model="outputFormat" @change="convert">
+      <select data-testid="format-select" v-model="outputFormat" @change="convert">
         <option value="json">JSON</option>
         <option value="sql">SQL INSERT</option>
         <option value="csv">CSV</option>
@@ -12,16 +12,16 @@
       </select>
     </div>
     
-    <div class="drop-zone" @paste="handlePaste" @dragover.prevent @drop.prevent="handleDrop">
+    <div class="drop-zone" data-testid="dropzone" @paste="handlePaste" @dragover.prevent @drop.prevent="handleDrop">
       <p>📋 粘贴数据或拖入文件</p>
       <p class="hint">.xlsx .xls .csv .json</p>
     </div>
     
-    <div class="preview" v-if="output">
-      <pre>{{ output }}</pre>
+    <div class="preview" v-if="output" data-testid="output">
+      <pre data-testid="output-text">{{ output }}</pre>
     </div>
     
-    <button class="btn-copy" @click="copyResult" :disabled="!output">📋 复制结果</button>
+    <button class="btn-copy" @click="copyResult" :disabled="!output" data-testid="copy-btn">📋 复制结果</button>
   </div>
 </template>
 

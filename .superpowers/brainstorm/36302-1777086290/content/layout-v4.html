@@ -1,0 +1,118 @@
+<style>
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; margin: 0; padding: 20px; background: #f8faf8; min-height: 100vh; }
+  .card { background: #fff; border-radius: 16px; padding: 24px; margin-bottom: 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.06); }
+  .header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; }
+  .title { font-size: 18px; font-weight: 600; color: #1a1a2e; }
+  .badge { background: #8bc34a; color: #fff; padding: 4px 10px; border-radius: 20px; font-size: 12px; }
+  
+  .dropzone {
+    border: 2px dashed #d0d0d0; border-radius: 12px; padding: 40px 20px;
+    text-align: center; transition: all 0.2s; cursor: pointer;
+  }
+  .dropzone:hover, .dropzone.dragover { border-color: #8bc34a; background: #f6f9f2; }
+  .dropzone .icon { font-size: 40px; margin-bottom: 8px; }
+  .dropzone .text { color: #444; font-size: 15px; font-weight: 500; }
+  .dropzone .hint { color: #aaa; font-size: 13px; margin-top: 6px; }
+  
+  .formats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+  .format-btn {
+    padding: 16px 12px; border: 1px solid #e8e8e8; border-radius: 12px;
+    text-align: center; cursor: pointer; transition: all 0.2s;
+  }
+  .format-btn:hover { border-color: #8bc34a; }
+  .format-btn.active { border-color: #8bc34a; background: #8bc34a; color: #fff; }
+  .format-btn .icon { font-size: 24px; margin-bottom: 6px; }
+  .format-btn .name { font-size: 14px; font-weight: 600; }
+  
+  .config { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 16px; }
+  .config-item label { display: block; font-size: 13px; color: #888; margin-bottom: 6px; }
+  .config-item input, .config-item select {
+    width: 100%; padding: 10px 12px; border: 1px solid #e8e8e8; border-radius: 8px;
+    font-size: 14px; box-sizing: border-box;
+  }
+  .config-item input:focus, .config-item select:focus { outline: none; border-color: #8bc34a; }
+  
+  .preview {
+    background: #1a1a2e; border-radius: 12px; padding: 16px;
+    max-height: 200px; overflow: auto;
+  }
+  .preview-label { color: #888; font-size: 12px; margin-bottom: 8px; }
+  .preview pre { color: #4fc3f7; font-size: 12px; margin: 0; white-space: pre-wrap; font-family: 'SF Mono', monospace; }
+  
+  .actions { display: flex; gap: 12px; margin-top: 16px; }
+  .btn { flex: 1; padding: 14px; border: none; border-radius: 10px; font-size: 15px; font-weight: 600; cursor: pointer; transition: all 0.2s; }
+  .btn-primary { background: #8bc34a; color: #fff; }
+  .btn-primary:hover { background: #7cb342; }
+  .btn-secondary { background: #f5f5f5; color: #666; }
+  .btn-secondary:hover { background: #eee; }
+  .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+</style>
+
+<div class="card">
+  <div class="header">
+    <span class="title">DataConvert</span>
+    <span class="badge">v1.0</span>
+  </div>
+  
+  <div class="dropzone" id="dropzone">
+    <div class="icon">📋</div>
+    <div class="text">点击粘贴或拖入文件</div>
+    <div class="hint">支持 .xlsx .xls .csv .json</div>
+  </div>
+  
+  <div style="margin-top: 16px;">
+    <div style="font-size: 13px; color: #888; margin-bottom: 10px;">输出格式</div>
+    <div class="formats">
+      <div class="format-btn active" onclick="selectFormat(this)">
+        <div class="icon">{ }</div>
+        <div class="name">JSON</div>
+      </div>
+      <div class="format-btn" onclick="selectFormat(this)">
+        <div class="icon">🗄️</div>
+        <div class="name">SQL</div>
+      </div>
+      <div class="format-btn" onclick="selectFormat(this)">
+        <div class="icon">📊</div>
+        <div class="name">CSV</div>
+      </div>
+      <div class="format-btn" onclick="selectFormat(this)">
+        <div class="icon">📝</div>
+        <div class="name">YAML</div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="config">
+    <div class="config-item">
+      <label>表名 (SQL/YAML)</label>
+      <input type="text" placeholder="table_name" id="tableName">
+    </div>
+    <div class="config-item">
+      <label>缩进</label>
+      <select id="indent">
+        <option>2 空格</option>
+        <option>4 空格</option>
+        <option>Tab</option>
+      </select>
+    </div>
+  </div>
+  
+  <div class="preview" id="preview">
+    <div class="preview-label">输出预览</div>
+    <pre id="previewContent">粘贴数据后，这里显示转换结果...</pre>
+  </div>
+  
+  <div class="actions">
+    <button class="btn btn-secondary" onclick="clearData()">清空</button>
+    <button class="btn btn-primary" onclick="copyResult()" id="copyBtn" disabled>📋 复制结果</button>
+  </div>
+</div>
+
+<script>
+  function selectFormat(el) {
+    document.querySelectorAll('.format-btn').forEach(b => b.classList.remove('active'));
+    el.classList.add('active');
+  }
+  function clearData() { alert('清空数据'); }
+  function copyResult() { alert('复制到剪贴板'); }
+</script>

@@ -1,0 +1,45 @@
+<style>
+  body { font-family: -apple-system, sans-serif; margin: 0; padding: 20px; background: #fafafa; }
+  .card { background: #fff; border-radius: 12px; padding: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+  h3 { margin: 0 0 16px; font-size: 16px; color: #333; }
+  
+  .convert-select {
+    display: flex; align-items: center; gap: 12px; margin-bottom: 16px;
+    padding: 16px; background: #f5f5f5; border-radius: 8px;
+  }
+  .convert-select select {
+    flex: 1; padding: 12px; border: 1px solid #ddd; border-radius: 6px;
+    font-size: 15px; background: #fff;
+  }
+  
+  .drop {
+    border: 2px dashed #ccc; border-radius: 8px; padding: 30px;
+    text-align: center; margin-bottom: 16px; color: #888;
+  }
+  
+  pre { background: #1a1a2e; color: #4fc3f7; padding: 16px; border-radius: 8px; font-size: 13px; overflow: auto; margin: 0 0 16px; }
+  .btn { width: 100%; padding: 14px; background: #4CAF50; color: #fff; border: none; border-radius: 8px; font-size: 15px; cursor: pointer; }
+</style>
+
+<div class="card">
+  <h3>🔄 数据转换</h3>
+  
+  <div class="convert-select">
+    <span>转换为</span>
+    <select>
+      <option>JSON</option>
+      <option>SQL INSERT</option>
+      <option>CSV</option>
+      <option>YAML</option>
+    </select>
+  </div>
+  
+  <div class="drop">📋 粘贴数据或拖入文件</div>
+  
+  <pre>[
+  {"id": 1, "name": "Alice"},
+  {"id": 2, "name": "Bob"}
+]</pre>
+  
+  <button class="btn">📋 复制结果</button>
+</div>
