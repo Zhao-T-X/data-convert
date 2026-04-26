@@ -60,3 +60,51 @@ test('Step 4: CSV drop test', async ({ page }) => {
   const out = await page.locator('[data-testid="output-text"]').textContent();
   expect(out).toContain('name');
 });
+
+test('Step 5: large data paste performance', async ({ page }) => {
+  await page.goto('/');
+  const large = Array.from({ length: 5000 }, (_, i) => ({ id: i, name: `Name${i}` }));
+  const payload = JSON.stringify(large);
+  await page.evaluate((payload) => {
+    const dz = document.querySelector('[data-testid="dropzone"]');
+    const e = new Event('paste', { bubbles: true, cancelable: true });
+    (e as any).clipboardData = { getData: () => payload };
+    dz.dispatchEvent(e);
+  }, payload);
+  // allow processing
+  await page.waitForTimeout(400);
+  const out = await page.locator('[data-testid="output-text"]').textContent();
+  expect(out && out.length).toBeGreaterThan(4000);
+});
+
+test('Step 6: copy output', async ({ page }) => {
+  await page.goto('/');
+  const json = '[{"id":1,"name":"Alice"},{"id":2,"name":"Bob"}]';
+  await page.evaluate((payload) => {
+    const dz = document.querySelector('[data-testid="dropzone"]');
+    const e = new Event('paste', { bubbles: true, cancelable: true });
+    (e as any).clipboardData = { getData: () => payload };
+    dz.dispatchEvent(e);
+  }, json);
+  await page.waitForTimeout(200);
+  const copyBtn = page.locator('[data-testid="copy-btn"]');
+  await copyBtn.isEnabled();
+  await copyBtn.click();
+  // ensure UI doesn't crash and button remains enabled after copy
+  expect(await copyBtn.isEnabled()).toBe(true);
+});
+
+test('Step 7: error handling for invalid JSON', async ({ page }) => {
+  await page.goto('/');
+  const invalid = 'not json';
+  await page.evaluate((payload) => {
+    const dz = document.querySelector('[data-testid="dropzone"]');
+    const e = new Event('paste', { bubbles: true, cancelable: true });
+    (e as any).clipboardData = { getData: () => payload };
+    dz.dispatchEvent(e);
+  }, invalid);
+  await page.waitForTimeout(200);
+  const out = await page.locator('[data-testid="output-text"]').textContent();
+  const ok = /解析错误|不支持的格式/.test(out || '');
+  expect(ok).toBeTruthy();
+});
