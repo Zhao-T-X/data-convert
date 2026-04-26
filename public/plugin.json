@@ -1,0 +1,14 @@
+{
+  "name": "dataconvert",
+  "pluginName": "DataConvert",
+  "description": "数据格式转换工具",
+  "version": "1.0.0",
+  "main": "index.html",
+  "preload": "preload.js",
+  "features": [
+    {
+      "code": "dataconvert",
+      "explain": "数据格式转换"
+    }
+  ]
+}
